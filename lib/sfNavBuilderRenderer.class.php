@@ -17,11 +17,11 @@ class sfNavBuilderRenderer implements sfNavBuilderRendererInterface
             $ret .= $item->render();
         } else
         {
-        foreach ($menu->getItems() as $item)
-        {
-            $ret .= $this->renderItem($item);
+            foreach ($menu->getItems() as $item)
+            {
+                $ret .= $this->renderItem($item);
+            }
         }
-	}
         return $ret;
     }
 
