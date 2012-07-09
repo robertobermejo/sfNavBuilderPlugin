@@ -12,15 +12,9 @@ class sfNavBuilderRenderer implements sfNavBuilderRendererInterface
     public function render(sfNavBuilder $menu)
     {
         $ret = '';
-        if (method_exists($menu, 'render'))
+        foreach ($menu->getItems() as $item)
         {
-            $ret .= $item->render();
-        } else
-        {
-            foreach ($menu->getItems() as $item)
-            {
-                $ret .= $this->renderItem($item);
-            }
+            $ret .= $this->renderItem($item);
         }
         return $ret;
     }
@@ -45,6 +39,7 @@ class sfNavBuilderRenderer implements sfNavBuilderRendererInterface
             }
         }
         $ret .='</li>';
+        return $ret;
     }
 
 }
