@@ -3,6 +3,7 @@
  * sfNavBuilderItem
  * Defines a single menu item to pass into sfNavBuilder
  * @author Chris Sedlmayr catchamonkey <chris@sedlmayr.co.uk>
+ * @author Roberto Bermejo Martinez <roberto+sfNavBuilderPlugin@robertobermejo.es>
  */
 class sfNavBuilderItem
 {
@@ -18,6 +19,7 @@ class sfNavBuilderItem
     private $_route;
     private $_routeParams;
     private $_persistableRouteParams;
+    private $_class;
 
     public function __construct()
     {
@@ -33,6 +35,7 @@ class sfNavBuilderItem
         $this->_route                   = FALSE;
         $this->_routeParams             = array();
         $this->_persistableRouteParams  = array();
+        $this->_class                   = '';
     }
 
     /**
@@ -161,6 +164,34 @@ class sfNavBuilderItem
     {
         $this->_context = $c;
         return $this;
+    }
+
+    /**
+     * Set custom class for li item
+     * @param strign $newClass New class string
+     * @return sfNavBuilderItem $this The current sfNavBuilderItem instance
+     */
+    public function setClass($newClass)
+    {
+        $this->_class = $newClass;
+        return $this;
+    }
+
+    /**
+     * Get current class for item
+     * @param boolean $complet Indicates whether rendered with class = "$ this_class" or return only the specified class
+     * @return String $ret Class item as string
+     */
+    public function getClass($complet = false)
+    {
+        if ($complet)
+        {
+            $ret = 'class="' . $this->_class . '"';
+        } else
+        {
+            $ret = $this->_class;
+        }
+        return $ret;
     }
 
     /**
