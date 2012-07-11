@@ -26,7 +26,8 @@ class sfNavBuilderArrayLoader
         if (is_null($menu))
         {
             $this->menu = new sfNavBuilder();
-        } else {
+        } else
+        {
             $this->menu = $menu;
         }
         return $this;
@@ -49,24 +50,46 @@ class sfNavBuilderArrayLoader
                     {
                         if (is_array($menu))
                         {
-                            if (array_key_exists('text', $menu) && array_key_exists('url', $menu))
+                            $navItem = $this->createItem($menu);
+                            if ($navItem)
                             {
-                                $navItem = new sfNavBuilderItem();
-                                $navItem->setDisplayName($menu['text'])
-                                        ->setUrl(url_for($menu['url']));
-                                if (array_key_exists('class', $menu))
-                                {
-                                    $navItem->setClass($menu['class']);
-                                }
-                                if (array_key_exists('activate_when', $menu))
-                                {
-                                    $navItem->addActivateWhen($menu['activate_when']);
-                                }
                                 $this->menu->addItem($navItem);
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public function createItem($itemArray)
+    {
+        if (is_array($itemArray))
+        {
+            if (array_key_exists('text', $itemArray) && array_key_exists('url', $itemArray))
+            {
+                $navItem = new sfNavBuilderItem();
+                $navItem->setDisplayName($itemArray['text'])
+                        ->setUrl(url_for($itemArray['url']));
+                if (array_key_exists('class', $itemArray))
+                {
+                    $navItem->setClass($itemArray['class']);
+                }
+                if (array_key_exists('activate_when', $itemArray))
+                {
+                    $navItem->addActivateWhen($itemArray['activate_when']);
+                }
+                if (array_key_exists('childrens', $itemArray))
+                {
+                    foreach ($itemArray['childrens'] as $childArray)
+                    {
+                        $childMenu = $this->createItem($childArray);
+                        if ($childMenu) {
+                            $navItem->addChild($childMenu);
+                        }
+                    }
+                }
+                return $navItem;
             }
         }
     }
