@@ -313,6 +313,20 @@ class sfNavBuilderItem
     {
         return $this->_isActive;
     }
+    
+    /**
+     * Return true if someone children is active 
+     */
+    public function isChildrenActive()
+    {
+        $result = false;
+        foreach ($this->_children as $children) {
+            if ($children->isActive()) {
+                $result = true;
+            }
+        }
+        return $result;
+    }
 
     public function canBeAdded()
     {
