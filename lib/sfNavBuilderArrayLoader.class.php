@@ -79,6 +79,10 @@ class sfNavBuilderArrayLoader
                 {
                     $navItem->addActivateWhen($itemArray['activate_when']);
                 }
+                if (array_key_exists('credentials', $itemArray))
+                {
+                    $navItem->addCredentialRules($itemArray['credentials']);
+                }
                 if (array_key_exists('childrens', $itemArray))
                 {
                     foreach ($itemArray['childrens'] as $childArray)
